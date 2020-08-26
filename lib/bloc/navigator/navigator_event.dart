@@ -1,0 +1,3 @@
+
+
+enum NavigationType { HOME, TASK}
