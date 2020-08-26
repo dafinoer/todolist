@@ -53,9 +53,5 @@ class Empty extends StatelessWidget {
         ),
       ),
     );
-    //   floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    //     floatingActionButton: customFab(context),
-    //     bottomNavigationBar:BottomNavigationBarApp(context, bottomNavigationBarIndex),
-    // );
   }
 }

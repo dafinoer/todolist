@@ -1,28 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/screen/home/home.dart';
-import 'package:todolist/screen/login/login_page.dart';
 import 'package:todolist/screen/main_page.dart';
-import 'package:todolist/widget/empty.dart';
-
 import 'package:todolist/utils/util.dart';
 
-class Onboarding extends StatefulWidget {
-  Onboarding({Key key}) : super(key: key);
-
-  _OnboardingState createState() => _OnboardingState();
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _OnboardingState extends State<Onboarding> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +28,7 @@ class _OnboardingState extends State<Onboarding> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      'Reminders made simple',
+                      'Login',
                       style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w500,
@@ -75,7 +60,7 @@ class _OnboardingState extends State<Onboarding> {
                     // );
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      MaterialPageRoute(builder: (context) => MainPage()),
                     );
                   },
                   textColor: Colors.white,
@@ -108,7 +93,7 @@ class _OnboardingState extends State<Onboarding> {
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: Center(
                       child: const Text(
-                        'Get Started',
+                        'Google SignIn',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w500),
                       ),

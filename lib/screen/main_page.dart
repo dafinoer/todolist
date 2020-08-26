@@ -20,7 +20,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<NavigatorBloc, NavigatorIndexState>(builder: (_, state) {
       return Scaffold(
-        appBar: fullAppbar(context),
+        appBar: emptyAppbar(),
         body: _viewWidget[state.index],
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: customFab(context),
