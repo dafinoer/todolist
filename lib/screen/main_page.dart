@@ -6,6 +6,7 @@ import 'package:todolist/bloc/navigator/navigator_bloc.dart';
 import 'package:todolist/bloc/navigator/navigator_state.dart';
 import 'package:todolist/screen/home/home.dart';
 import 'package:todolist/screen/task/task.dart';
+import 'package:todolist/utils/firebase_auth_singleton.dart';
 import 'package:todolist/widget/app_bars.dart';
 import 'package:todolist/widget/bottom_navigation.dart';
 import 'package:todolist/widget/fab.dart';
@@ -16,6 +17,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavigatorBloc, NavigatorIndexState>(builder: (_, state) {

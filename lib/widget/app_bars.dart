@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:todolist/utils/firebase_auth_singleton.dart';
 
 import 'package:todolist/utils/util.dart';
 
@@ -116,6 +117,7 @@ Widget fullAppbar(BuildContext context) {
 }
 
 Widget emptyAppbar() {
+  final simpleAuth = FirebaseAuthSingleton.singleton();
   return PreferredSize(
     preferredSize: Size.fromHeight(75.0),
     child: GradientAppBar(
@@ -137,7 +139,7 @@ Widget emptyAppbar() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Hello Bro!',
+              simpleAuth.auth.currentUser.displayName,
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
             ),
             Text(
