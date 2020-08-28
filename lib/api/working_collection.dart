@@ -10,6 +10,7 @@ class WorkingCollection {
   Future<void> addWorkingTask(Map<String, dynamic> data) async {
     try {
       await _reference.add(data);
+      return;
     } catch (e) {
       throw Exception(e);
     }

@@ -21,7 +21,6 @@ class DateEvent extends AddEvent {
   DateEvent(this.dateTime);
 }
 
-
 class SubmitEvent extends AddEvent {
   
 }

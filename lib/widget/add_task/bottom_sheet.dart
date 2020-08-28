@@ -14,7 +14,24 @@ class Modal {
         return BlocProvider(
             create: (_) => AddBloc(TodoState()),
             child: BlocListener<AddBloc, AddState>(
-              listener: (_, state) {},
+              listener: (_, state) {
+                if (state is TodoState) {
+                  if (state.dateTime == null) {
+                    final snackbar =
+                        SnackBar(content: Text('Datetime must fill'));
+                    Scaffold.of(context).showSnackBar(snackbar);
+                  } else if (state.title != null && state.title.isEmpty) {
+                    final snackbar = SnackBar(content: Text('Title must fill'));
+                    Scaffold.of(context).showSnackBar(snackbar);
+                  } else if (state.type != null && state.type.isEmpty) {
+                    final snackbar = SnackBar(content: Text('Title must fill'));
+                    Scaffold.of(context).showSnackBar(snackbar);
+                  }
+                } else if (state is AddError) {
+                  final snackbar = SnackBar(content: Text(state.error));
+                  Scaffold.of(context).showSnackBar(snackbar);
+                }
+              },
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.75,
                 padding: EdgeInsets.only(

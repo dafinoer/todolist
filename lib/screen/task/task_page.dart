@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:todolist/utils/util.dart';
 import 'package:todolist/widget/menu_task_widget.dart';
 
-class Task extends StatefulWidget {
-  Task({Key key}) : super(key: key);
+class TaskPage extends StatefulWidget {
+  TaskPage({Key key}) : super(key: key);
 
-  _TaskState createState() => _TaskState();
+  _TaskPageState createState() => _TaskPageState();
 }
 
-class _TaskState extends State<Task> {
+class _TaskPageState extends State<TaskPage> {
   final bottomNavigationBarIndex = 1;
 
   @override

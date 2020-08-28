@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:todolist/bloc/add/bloc.dart';
 
 abstract class AddState extends Equatable {
   const AddState();
@@ -12,6 +13,12 @@ class AddError extends AddState {
   
   @override
   List<Object> get props => [error];
+}
+
+class SubmitLoading extends AddState {
+  final  bool isLoading;
+
+  const SubmitLoading(this.isLoading);
 }
 
 class TodoState extends AddState {

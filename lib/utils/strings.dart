@@ -10,4 +10,6 @@ class Strings {
   static const String shopping = 'Shopping';
   static const String party = 'Party';
   static const String study = 'Study';
+
+  static const String add_task = 'Add task';
 }

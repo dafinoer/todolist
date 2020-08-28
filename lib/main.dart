@@ -26,8 +26,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   SharePref sharedpref;
 
-  Future<User> _usernow;
-
   FirebaseAuthSingleton user_auth;
 
   @override
