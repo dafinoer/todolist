@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:todolist/bloc/navigator/bloc.dart';
+import 'package:todolist/bloc/observer/main_observer.dart';
 import 'package:todolist/screen/main_page.dart';
 import 'package:todolist/screen/onboard/onboarding.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:todolist/utils/shared_pref.dart';
 import 'package:todolist/utils/util.dart';
 
 void main() {
+  Bloc.observer = MainBlocObserver();
   runApp(App());
 }
 

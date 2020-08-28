@@ -6,6 +6,12 @@ class AddBloc extends Bloc<AddEvent, AddState> {
   AddBloc(AddState initialState) : super(initialState);
 
   @override
+  Future<void> close() {
+    print('close');
+    return super.close();
+  }
+
+  @override
   Stream<AddState> mapEventToState(AddEvent event) async* {
     final currentState = state;
 
@@ -44,12 +50,12 @@ class AddBloc extends Bloc<AddEvent, AddState> {
   }
 
   Stream<AddState> _typeChoice(TodoState addState, TypeChoice event) async* {
-    yield isTodoState(state) ? TodoState(type: event.txtType) : addState.type;
+    yield isTodoState(state) ?  addState.copyWith(type: event.txtType) : TodoState(type: event.txtType);
   }
 
   Stream<AddState> _dataEvent(TodoState addState, DateEvent event) async* {
     yield isTodoState(state)
-        ? TodoState(dateTime: event.dateTime)
-        : addState.copyWith(dateTime: event.dateTime);
+        ? addState.copyWith(dateTime: event.dateTime)
+        : TodoState(dateTime: event.dateTime);
   }
 }
