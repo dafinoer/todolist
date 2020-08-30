@@ -43,7 +43,7 @@ class AddBloc extends Bloc<AddEvent, AddState> {
         default:
       }
     } catch (e) {
-      yield AddError(e);
+      yield AddError(e.toString());
     }
   }
 
@@ -69,22 +69,22 @@ class AddBloc extends Bloc<AddEvent, AddState> {
         : TodoState(dateTime: event.dateTime);
   }
 
-  Stream<AddState> _onSubmit(TodoState addState) async* {
-    if (addState.title != null &&
-        addState.type != null &&
-        addState.dateTime != null) {
-      yield SubmitLoading(true);
+  Stream<AddState> _onSubmit(TodoState newState) async* {
+    if (newState.title != null &&
+        newState.type != null &&
+        newState.dateTime != null) {
+      yield newState.copyWith(isLoading: true);
 
       final task = Task(
-        title: addState.title,
-        schedule: addState.dateTime,
+        title: newState.title,
+        schedule: newState.dateTime,
         emailUser: currentUser.auth.currentUser.email,
         username: currentUser.auth.currentUser.displayName,
       );
-
-      _repository.add(task);
-      yield SubmitLoading(false);
+      await _repository.add(task);
+      // await Future.delayed(Duration(milliseconds: 500));
+      yield newState.copyWith(isLoading: false);
+      yield SubmitLoading(true);
     }
-    yield addState;
   }
 }

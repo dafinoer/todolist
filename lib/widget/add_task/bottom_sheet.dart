@@ -5,6 +5,10 @@ import 'package:todolist/bloc/add/bloc.dart';
 import 'package:todolist/widget/add_task/main_task.dart';
 
 class Modal {
+  GlobalKey<ScaffoldState> key;
+
+  Modal(this.key);
+
   mainBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -15,21 +19,11 @@ class Modal {
             create: (_) => AddBloc(TodoState()),
             child: BlocListener<AddBloc, AddState>(
               listener: (_, state) {
-                if (state is TodoState) {
-                  if (state.dateTime == null) {
-                    final snackbar =
-                        SnackBar(content: Text('Datetime must fill'));
-                    Scaffold.of(context).showSnackBar(snackbar);
-                  } else if (state.title != null && state.title.isEmpty) {
-                    final snackbar = SnackBar(content: Text('Title must fill'));
-                    Scaffold.of(context).showSnackBar(snackbar);
-                  } else if (state.type != null && state.type.isEmpty) {
-                    final snackbar = SnackBar(content: Text('Title must fill'));
-                    Scaffold.of(context).showSnackBar(snackbar);
-                  }
+                if (state is SubmitLoading && state.isLoading) {
+                  Navigator.pop(context);
                 } else if (state is AddError) {
                   final snackbar = SnackBar(content: Text(state.error));
-                  Scaffold.of(context).showSnackBar(snackbar);
+                  key.currentState.showSnackBar(snackbar);
                 }
               },
               child: Container(

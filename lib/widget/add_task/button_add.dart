@@ -15,7 +15,7 @@ class ButtonAdd extends StatelessWidget implements BaseBuilder {
         builder: (_, state) {
           bool isLoading = false;
 
-          if (state is SubmitLoading) {
+          if (state is TodoState) {
             isLoading = state.isLoading;
           }
 
@@ -65,8 +65,11 @@ class ButtonAdd extends StatelessWidget implements BaseBuilder {
 
   @override
   bool refreshWidget(AddState prev, AddState curr) {
-    if (prev is SubmitLoading && curr is SubmitLoading)
-      return prev.isLoading != curr.isLoading;
-    return false;
+    if (prev is TodoState && curr is TodoState) {
+      if (prev.isLoading != curr.isLoading) return true;
+      return false;
+    } else {
+      return false;
+    }
   }
 }

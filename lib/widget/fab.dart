@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:todolist/utils/util.dart';
 import 'package:todolist/widget/add_task/bottom_sheet.dart';
 
-FloatingActionButton customFab(context) {
-  Modal modal = Modal();
+FloatingActionButton customFab(context, GlobalKey<ScaffoldState> key) {
+
+  Modal modal = Modal(key);
 
   return FloatingActionButton(
     onPressed: () {

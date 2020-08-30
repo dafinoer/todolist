@@ -17,14 +17,17 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
+  final globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavigatorBloc, NavigatorIndexState>(builder: (_, state) {
       return Scaffold(
+        key: globalKey,
         appBar: emptyAppbar(),
         body: _viewWidget[state.index],
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: customFab(context),
+        floatingActionButton: customFab(context, globalKey),
         bottomNavigationBar: BottomNavigationBarApp(context, state.index),
       );
     });
