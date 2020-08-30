@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todolist/bloc/add/add_event.dart';
 import 'package:todolist/bloc/add/add_state.dart';
 import 'package:todolist/model/task.dart';
+import 'package:todolist/repository/task_repository.dart';
 import 'package:todolist/repository/working_repository.dart';
 import 'package:todolist/utils/firebase_auth_singleton.dart';
 
@@ -9,6 +10,8 @@ class AddBloc extends Bloc<AddEvent, AddState> {
   AddBloc(AddState initialState) : super(initialState);
 
   final WorkingRepository _repository = WorkingRepository();
+
+  final TaskRepository _taskRepository = TaskRepository();
 
   final currentUser = FirebaseAuthSingleton.singleton();
 
@@ -76,13 +79,15 @@ class AddBloc extends Bloc<AddEvent, AddState> {
       yield newState.copyWith(isLoading: true);
 
       final task = Task(
-        title: newState.title,
-        schedule: newState.dateTime,
-        emailUser: currentUser.auth.currentUser.email,
-        username: currentUser.auth.currentUser.displayName,
-      );
-      await _repository.add(task);
-      // await Future.delayed(Duration(milliseconds: 500));
+          title: newState.title,
+          schedule: newState.dateTime.millisecondsSinceEpoch,
+          emailUser: currentUser.auth.currentUser.email,
+          username: currentUser.auth.currentUser.displayName,
+          typeTask: newState.type.toLowerCase());
+      // await _repository.add(task);
+
+      await _taskRepository.addNewTask(task);
+
       yield newState.copyWith(isLoading: false);
       yield SubmitLoading(true);
     }
