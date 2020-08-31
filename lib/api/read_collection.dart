@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:todolist/api/task_collection.dart';
 import 'package:todolist/model/task.dart';
 
-class ReadCollection {
+class ReadCollection extends TaskCollection{
   CollectionReference _collectionReference;
 
   ReadCollection({@required String collectionName}) {
@@ -19,7 +20,7 @@ class ReadCollection {
           .startAfterDocument(snapshotData)
           .limit(20)
           .get();
-      return result.docs.map((e) => Task.fromJson(e.data())).toList();
+      return result.docs.map((e) => Task.fromJson(e.data(), e.id)).toList();
     } catch (e) {
       throw Exception(e);
     }
@@ -28,7 +29,7 @@ class ReadCollection {
   Future<List<Task>> taskLimit(int limit) async {
     try {
       final result = await _collectionReference.limit(limit).get();
-      return result.docs.map((e) => Task.fromJson(e.data())).toList();
+      return result.docs.map((e) => Task.fromJson(e.data(), e.id)).toList();
     } catch (e) {
       throw Exception(e);
     }

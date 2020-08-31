@@ -23,15 +23,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
     final current = state;
     try {
-      if(event is FirstOpen){
-        _subscription = _taskRepository.readRepository.realtimeState().listen((event) {
-          final result = event.docs.map((e) => Task.fromJson(e.data())).toList();
+      if (event is FirstOpen) {
+        _subscription =
+            _taskRepository.readRepository.realtimeState().listen((event) {
+          final result =
+              event.docs.map((e) => Task.fromJson(e.data(), e.id)).toList();
           add(ListEvent(itemTask: result));
         });
       }
-
-      if(event is ListEvent){
+      if (event is ListEvent) {
         yield HomeLists(event.itemTask, false);
+      }
+
+      if (event is TaskDoneEvent) {
+        await _taskRepository.isDoneChecklist(
+            Task.checkUpdate(event.isDone), event.docName);
       }
     } catch (e) {
       yield HomeError(e.toString());

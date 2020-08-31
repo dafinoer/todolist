@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
 
           if (state is HomeError) {
             return Center(
-              child: Text('something wrong'),
+              child: const Text('something wrong'),
             );
           }
 
@@ -42,14 +42,19 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.only(top: 16.0),
                 itemCount: state.items.length,
                 itemBuilder: (_, index) {
-                  // return
                   return SlideTileWidget(
                       title: '08.00 AM',
                       subtitle: state.items[index].title,
                       iconslide: Image.asset('assets/images/trash.png'),
-                      isChecked: true,
+                      isChecked: state.items[index].isChecked,
                       isBellActive: false,
-                      onTapSlide: () {});
+                      onTapCheck: () {
+                        context.bloc<HomeBloc>().add(TaskDoneEvent(docName: state.items[index].id, isDone: !state.items[index].isChecked));
+                      },
+                      onTapSlide: () {
+                        print(state.items[index].id);
+                        // context.bloc<HomeBloc>().add(TaskDoneEvent(docName: state.items[index].id));
+                      });
                 });
           }
         }));

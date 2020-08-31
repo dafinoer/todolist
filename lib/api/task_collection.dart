@@ -15,4 +15,13 @@ class TaskCollection {
       throw Exception(e);
     }
   }
+
+  Future<void> updateTask(Map data, String docName) async {
+    try {
+      await _collectionReference.doc(docName).update(data);
+      return;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

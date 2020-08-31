@@ -16,6 +16,13 @@ class ListEvent extends HomeEvent {
   ListEvent({this.itemTask});
 }
 
+class TaskDoneEvent extends HomeEvent {
+  final String docName;
+  final bool isDone;
+
+  TaskDoneEvent({this.docName, this.isDone});
+}
+
 class FirstOpen extends HomeEvent {}
 
 class PaginationEventTask extends HomeEvent{

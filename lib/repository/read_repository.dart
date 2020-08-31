@@ -23,4 +23,13 @@ class ReadRepository {
       throw Exception(e);
     }
   }
+
+  Future<void> isDoneChecklist(Map data, String docName) async {
+    try {
+      await readRepository.updateTask(data, docName);
+      return;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

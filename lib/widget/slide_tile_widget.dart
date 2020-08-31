@@ -10,6 +10,7 @@ class SlideTileWidget extends StatelessWidget {
   final bool isBellActive;
   final Function onTapSlide;
   final bool isMarginTop;
+  final Function onTapCheck;
 
   SlideTileWidget(
       {this.title,
@@ -18,6 +19,7 @@ class SlideTileWidget extends StatelessWidget {
       this.iconslide,
       this.isChecked = false,
       this.isBellActive = false,
+      this.onTapCheck,
       this.onTapSlide});
 
   @override
@@ -34,11 +36,14 @@ class SlideTileWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               // Image.asset('assets/images/checked-empty.png'),
-              Padding(
-                padding: EdgeInsets.only(right: 16.0),
-                child: isChecked
-                    ? Image.asset('assets/images/checked.png')
-                    : Image.asset('assets/images/checked-empty.png'),
+              InkWell(
+                onTap: onTapCheck,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 16.0),
+                  child: isChecked
+                      ? Image.asset('assets/images/checked.png')
+                      : Image.asset('assets/images/checked-empty.png'),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 16.0),
@@ -105,4 +110,5 @@ class SlideTileWidget extends StatelessWidget {
       ],
     );
   }
+  
 }
