@@ -29,4 +29,15 @@ class Task extends Equatable{
       'type_task' : typeTask
     };
   }
+
+
+  factory Task.fromJson(Map map){
+    return Task(
+      schedule: map['schedule'] ?? 0,
+      title: map['title'] ?? '',
+      emailUser: map['email'] ?? '',
+      typeTask: map['type_task'] ?? '',
+      username: map['username'] ?? ''
+    );
+  }
 }

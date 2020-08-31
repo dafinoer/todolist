@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:todolist/bloc/home/bloc.dart';
+import 'package:todolist/bloc/home/home_bloc.dart';
 import 'package:todolist/bloc/navigator/bloc.dart';
 import 'package:todolist/bloc/observer/main_observer.dart';
 import 'package:todolist/screen/main_page.dart';
@@ -59,6 +62,7 @@ class _AppState extends State<App> {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => NavigatorBloc(NavigatorIndexState(0))),
+          BlocProvider(create: (_) => HomeBloc(HomeLoading()))
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
