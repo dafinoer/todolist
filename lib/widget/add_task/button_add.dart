@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/bloc/add/add_bloc.dart';
 import 'package:todolist/bloc/add/add_event.dart';
-import 'package:todolist/bloc/add/add_state.dart';
+import 'package:todolist/bloc/add/bloc.dart';
 import 'package:todolist/utils/strings.dart';
 import 'package:todolist/utils/util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todolist/widget/add_task/builder_helper.dart';
 
 class ButtonAdd extends StatelessWidget implements BaseBuilder {
+
+  final bool isEdit;
+  final String docId;
+
+  ButtonAdd({this.isEdit = false, @required this.docId});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddBloc, AddState>(
@@ -20,7 +26,13 @@ class ButtonAdd extends StatelessWidget implements BaseBuilder {
           }
 
           return RaisedButton(
-            onPressed: () => context.bloc<AddBloc>().add(SubmitEvent()),
+            onPressed: () {
+              if(isEdit){
+                context.bloc<AddBloc>().add(SubmitEdit(docId));
+              } else {
+                context.bloc<AddBloc>().add(SubmitEvent());
+              }
+            },
             textColor: Colors.white,
             padding: const EdgeInsets.all(0.0),
             shape: RoundedRectangleBorder(

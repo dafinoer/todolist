@@ -44,14 +44,14 @@ class TypeTaskModal extends StatelessWidget implements BaseBuilder {
               itemCount: listTypeName().length,
               itemBuilder: (_, index) {
                 if (choiceType != null &&
-                    listTypeName()[index].contains(choiceType)) {
+                    listTypeName()[index].toLowerCase().contains(choiceType)) {
                   return PilssWidget(
                     title: listTypeName()[index],
                     isSelect: true,
                     ontap: () {
                       context
                           .bloc<AddBloc>()
-                          .add(TypeChoice(listTypeName()[index]));
+                          .add(TypeChoice(listTypeName()[index].toLowerCase()));
                     },
                   );
                 }
@@ -61,7 +61,7 @@ class TypeTaskModal extends StatelessWidget implements BaseBuilder {
                   ontap: () {
                     context
                         .bloc<AddBloc>()
-                        .add(TypeChoice(listTypeName()[index]));
+                        .add(TypeChoice(listTypeName()[index].toLowerCase()));
                   },
                 );
               },

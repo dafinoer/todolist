@@ -7,14 +7,19 @@ import 'package:todolist/widget/add_task/text_field_modal.dart';
 import 'package:todolist/widget/add_task/type_task_modal.dart';
 
 class MainTask extends StatelessWidget {
+
+  final bool isEdit;
+
+  MainTask({this.isEdit = false});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          ButtonCloseModal(),
-          Text(
+          isEdit ? const SizedBox() : ButtonCloseModal(),
+          isEdit ? const SizedBox() : Text(
             Strings.add_new_task,
             style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
           ),
@@ -33,7 +38,7 @@ class MainTask extends StatelessWidget {
               padding: EdgeInsets.only(
                   top: 10.0, left: 16.0, right: 16.0, bottom: 16.0),
               child: DateTaskModal()),
-          ButtonAdd(),
+          isEdit ? const SizedBox() : ButtonAdd(),
         ],
       ),
     );

@@ -2,22 +2,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todolist/bloc/add/add_event.dart';
 import 'package:todolist/bloc/add/add_state.dart';
 import 'package:todolist/model/task.dart';
+import 'package:todolist/repository/read_repository.dart';
 import 'package:todolist/repository/task_repository.dart';
 import 'package:todolist/repository/working_repository.dart';
 import 'package:todolist/utils/firebase_auth_singleton.dart';
 
 class AddBloc extends Bloc<AddEvent, AddState> {
-  AddBloc(AddState initialState) : super(initialState);
-
-  final WorkingRepository _repository = WorkingRepository();
+  final bool isEdit;
 
   final TaskRepository _taskRepository = TaskRepository();
 
+  final ReadRepository _readRepository = ReadRepository();
+
   final currentUser = FirebaseAuthSingleton.singleton();
+
+  AddBloc(AddState initialState, {this.isEdit = false}) : super(initialState);
 
   @override
   Future<void> close() {
-    print('close');
     return super.close();
   }
 
@@ -41,6 +43,12 @@ class AddBloc extends Bloc<AddEvent, AddState> {
 
         case SubmitEvent:
           yield* _onSubmit(currentState);
+          break;
+
+        case SubmitEdit:
+          final dataEvent = event as SubmitEdit;
+
+          yield* _onSubmit(currentState, docName: dataEvent.idDoc);
           break;
 
         default:
@@ -72,7 +80,7 @@ class AddBloc extends Bloc<AddEvent, AddState> {
         : TodoState(dateTime: event.dateTime);
   }
 
-  Stream<AddState> _onSubmit(TodoState newState) async* {
+  Stream<AddState> _onSubmit(TodoState newState, {String docName}) async* {
     if (newState.title != null &&
         newState.type != null &&
         newState.dateTime != null) {
@@ -83,10 +91,18 @@ class AddBloc extends Bloc<AddEvent, AddState> {
           schedule: newState.dateTime.millisecondsSinceEpoch,
           emailUser: currentUser.auth.currentUser.email,
           username: currentUser.auth.currentUser.displayName,
+          isChecked: newState.isChecked,
           typeTask: newState.type.toLowerCase());
-      // await _repository.add(task);
 
-      await _taskRepository.addNewTask(task);
+      if (!isEdit) {
+        await _taskRepository.addNewTask(task);
+      }
+      else {
+        final taskMap = task.toMap();
+        taskMap.removeWhere((key, value) => key == 'doc_id');
+        
+        await _readRepository.editTask(taskMap, docName);
+      }
 
       yield newState.copyWith(isLoading: false);
       yield SubmitLoading(true);

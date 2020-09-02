@@ -14,9 +14,14 @@ class TextFieldModal extends StatelessWidget implements BaseBuilder {
     return BlocBuilder<AddBloc, AddState>(
         buildWhen: (prev, cur) => refreshWidget(prev, cur),
         builder: (_, state) {
+          String initialValue;
+
+          if(state is TodoState && state.title != null) initialValue = state.title;
+
           return Container(
             padding: EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-            child: TextField(
+            child: TextFormField(
+              initialValue: initialValue ?? '',
               autofocus: true,
               style: TextStyle(fontSize: 22, fontStyle: FontStyle.normal),
               decoration: InputDecoration(

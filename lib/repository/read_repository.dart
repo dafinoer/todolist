@@ -32,4 +32,14 @@ class ReadRepository {
       throw Exception(e);
     }
   }
+
+
+  Future<void> editTask(Map data, String docName) async {
+    try {
+      await isDoneChecklist(data, docName);
+      return;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

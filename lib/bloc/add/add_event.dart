@@ -21,6 +21,10 @@ class DateEvent extends AddEvent {
   DateEvent(this.dateTime);
 }
 
-class SubmitEvent extends AddEvent {
-  
+class SubmitEvent extends AddEvent {}
+
+class SubmitEdit extends AddEvent{
+  final String idDoc;
+
+  SubmitEdit(this.idDoc);
 }

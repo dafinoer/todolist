@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todolist/bloc/home/bloc.dart';
+import 'package:todolist/model/task.dart';
+import 'package:todolist/screen/detail/detail.dart';
 import 'package:todolist/widget/slide_tile_widget.dart';
 
 class Home extends StatefulWidget {
@@ -43,13 +45,17 @@ class _HomeState extends State<Home> {
                 itemCount: state.items.length,
                 itemBuilder: (_, index) {
                   return SlideTileWidget(
+                      ontap: () =>
+                          onTapEdit(state.items[index], state.items[index].id),
                       title: '08.00 AM',
                       subtitle: state.items[index].title,
                       iconslide: Image.asset('assets/images/trash.png'),
                       isChecked: state.items[index].isChecked,
                       isBellActive: false,
                       onTapCheck: () {
-                        context.bloc<HomeBloc>().add(TaskDoneEvent(docName: state.items[index].id, isDone: !state.items[index].isChecked));
+                        context.bloc<HomeBloc>().add(TaskDoneEvent(
+                            docName: state.items[index].id,
+                            isDone: !state.items[index].isChecked));
                       },
                       onTapSlide: () {
                         print(state.items[index].id);
@@ -58,5 +64,10 @@ class _HomeState extends State<Home> {
                 });
           }
         }));
+  }
+
+  void onTapEdit(Task task, String docId) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => Detail(task, docId)));
   }
 }
