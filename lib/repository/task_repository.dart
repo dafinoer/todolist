@@ -10,4 +10,9 @@ class TaskRepository {
         .then((value) => print('writing task success'))
         .catchError((error) => print(error));
   }
+
+  Future<void> deleteTask(String idDoc) async {
+    await _collection.deleteTask(idDoc);
+    return;
+  }
 }

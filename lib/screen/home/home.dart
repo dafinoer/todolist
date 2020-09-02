@@ -58,8 +58,9 @@ class _HomeState extends State<Home> {
                             isDone: !state.items[index].isChecked));
                       },
                       onTapSlide: () {
-                        print(state.items[index].id);
-                        // context.bloc<HomeBloc>().add(TaskDoneEvent(docName: state.items[index].id));
+                        context
+                            .bloc<HomeBloc>()
+                            .add(DeleteTask(state.items[index].id));
                       });
                 });
           }

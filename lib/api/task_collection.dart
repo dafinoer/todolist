@@ -24,4 +24,9 @@ class TaskCollection {
       throw Exception(e);
     }
   }
+
+  Future<void> deleteTask(String docId) async {
+    await _collectionReference.doc(docId).delete();
+    return;
+  }
 }

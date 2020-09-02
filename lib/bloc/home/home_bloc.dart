@@ -5,9 +5,12 @@ import 'package:todolist/bloc/home/home_event.dart';
 import 'package:todolist/bloc/home/home_state.dart';
 import 'package:todolist/model/task.dart';
 import 'package:todolist/repository/read_repository.dart';
+import 'package:todolist/repository/task_repository.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final _taskRepository = ReadRepository();
+
+  final _deleteRepo = TaskRepository();
 
   StreamSubscription _subscription;
 
@@ -38,6 +41,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (event is TaskDoneEvent) {
         await _taskRepository.isDoneChecklist(
             Task.checkUpdate(event.isDone), event.docName);
+      }
+
+      if (event is DeleteTask) {
+        await _deleteRepo.deleteTask(event.idDoc);
       }
     } catch (e) {
       yield HomeError(e.toString());
