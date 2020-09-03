@@ -12,7 +12,7 @@ class AddBloc extends Bloc<AddEvent, AddState> {
 
   final TaskRepository _taskRepository = TaskRepository();
 
-  final ReadRepository _readRepository = ReadRepository();
+  final ReadRepository _readRepository = ReadRepository('task');
 
   final currentUser = FirebaseAuthSingleton.singleton();
 

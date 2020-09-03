@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:todolist/api/task_collection.dart';
 import 'package:todolist/model/task.dart';
 
-class ReadCollection extends TaskCollection{
+class ReadCollection extends TaskCollection {
   CollectionReference _collectionReference;
 
   ReadCollection({@required String collectionName}) {
@@ -13,8 +13,10 @@ class ReadCollection extends TaskCollection{
 
   Stream<QuerySnapshot> realtimeState() => _collectionReference.snapshots();
 
-  Future<List<Task>> pagination(
-      DocumentSnapshot snapshotData) async {
+  Stream<QuerySnapshot> realTimeQuery(String fieldName, String paramContain) =>
+      _collectionReference.where(fieldName, isEqualTo: paramContain).snapshots();
+
+  Future<List<Task>> pagination(DocumentSnapshot snapshotData) async {
     try {
       final result = await _collectionReference
           .startAfterDocument(snapshotData)
@@ -34,4 +36,6 @@ class ReadCollection extends TaskCollection{
       throw Exception(e);
     }
   }
+
+  CollectionReference getCollection() => this._collectionReference;
 }

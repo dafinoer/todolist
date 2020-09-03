@@ -3,12 +3,20 @@ import 'package:todolist/api/read_collection.dart';
 import 'package:todolist/model/task.dart';
 
 class ReadRepository {
-  final readRepository = ReadCollection(collectionName: 'task');
+  ReadCollection _readRepository;
 
-  Future<List<Task>> fetchPagination(
-      DocumentSnapshot documentSnapshot) async {
+  ReadRepository(String typeName) {
+    this._readRepository = ReadCollection(collectionName: typeName);
+  }
+
+  Stream<QuerySnapshot> realTimeTask() => _readRepository.realtimeState();
+
+  Stream<QuerySnapshot> realTimeTaskDoc(String fieldName, String queryParam) =>
+      _readRepository.realTimeQuery(fieldName, queryParam);
+
+  Future<List<Task>> fetchPagination(DocumentSnapshot documentSnapshot) async {
     try {
-      final result = await readRepository.pagination(documentSnapshot);
+      final result = await _readRepository.pagination(documentSnapshot);
       return result;
     } catch (e) {
       throw Exception(e);
@@ -17,7 +25,7 @@ class ReadRepository {
 
   Future<List<Task>> limit(int limit) async {
     try {
-      final dataResult = await readRepository.taskLimit(limit);
+      final dataResult = await _readRepository.taskLimit(limit);
       return dataResult;
     } catch (e) {
       throw Exception(e);
@@ -26,13 +34,12 @@ class ReadRepository {
 
   Future<void> isDoneChecklist(Map data, String docName) async {
     try {
-      await readRepository.updateTask(data, docName);
+      await _readRepository.updateTask(data, docName);
       return;
     } catch (e) {
       throw Exception(e);
     }
   }
-
 
   Future<void> editTask(Map data, String docName) async {
     try {

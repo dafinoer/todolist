@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/screen/task/task_list_page.dart';
 import 'package:todolist/utils/util.dart';
 import 'package:todolist/widget/menu_task_widget.dart';
 
@@ -39,6 +40,9 @@ class _TaskPageState extends State<TaskPage> {
                 title: 'Personal',
                 subtitle: '24 Tasks',
                 imagePath: 'assets/images/icon-user.png',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => TaskListPage('Personal')));
+                },
               ),
               MenuTaskWidget(
                   subtitle: '44 Tasks',

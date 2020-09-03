@@ -12,4 +12,6 @@ class Strings {
   static const String study = 'Study';
 
   static const String add_task = 'Add task';
+
+  static const String task = 'Task';
 }

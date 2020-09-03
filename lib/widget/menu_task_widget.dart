@@ -5,47 +5,18 @@ class MenuTaskWidget extends StatelessWidget {
   final String title;
   final String subtitle;
   final String imagePath;
+  final Function onTap;
 
   MenuTaskWidget(
       {@required this.subtitle,
       @required this.title,
-      @required this.imagePath});
+      @required this.imagePath,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                width: 65,
-                height: 65,
-                child: Image.asset(imagePath),
-                decoration: const BoxDecoration(
-                  color: CustomColors.GreenBackground,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(50.0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 5),
-              Text(
-                title,
-                style: TextStyle(
-                    fontSize: 17,
-                    color: CustomColors.TextHeaderGrey,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 8),
-              Text(
-                subtitle ?? '',
-                style: TextStyle(
-                    fontSize: 9, color: CustomColors.TextSubHeaderGrey),
-              ),
-            ],
-          ),
-        ),
+        child: FlatButton(onPressed: onTap, child: item()),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(5.0),
@@ -62,5 +33,40 @@ class MenuTaskWidget extends StatelessWidget {
         ),
         margin: EdgeInsets.all(10),
         height: 150.0);
+  }
+
+  Widget item() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: 65,
+            height: 65,
+            child: Image.asset(imagePath),
+            decoration: const BoxDecoration(
+              color: CustomColors.GreenBackground,
+              borderRadius: BorderRadius.all(
+                Radius.circular(50.0),
+              ),
+            ),
+          ),
+          SizedBox(height: 5),
+          Text(
+            title,
+            style: TextStyle(
+                fontSize: 17,
+                color: CustomColors.TextHeaderGrey,
+                fontWeight: FontWeight.w600),
+          ),
+          SizedBox(height: 8),
+          Text(
+            subtitle ?? '',
+            style:
+                TextStyle(fontSize: 9, color: CustomColors.TextSubHeaderGrey),
+          ),
+        ],
+      ),
+    );
   }
 }

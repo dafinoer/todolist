@@ -8,7 +8,7 @@ import 'package:todolist/repository/read_repository.dart';
 import 'package:todolist/repository/task_repository.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final _taskRepository = ReadRepository();
+  final _taskRepository = ReadRepository('task');
 
   final _deleteRepo = TaskRepository();
 
@@ -18,7 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   @override
   Future<void> close() {
-    _subscription.cancel();
+    _subscription?.cancel();
     return super.close();
   }
 
@@ -27,10 +27,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final current = state;
     try {
       if (event is FirstOpen) {
-        _subscription =
-            _taskRepository.readRepository.realtimeState().listen((event) {
-          final result =
-              event.docs.map((e) => Task.fromJson(e.data(), e.id)).toList();
+        _subscription = _taskRepository.realTimeTask().listen((event) {
+          final result = event.docs.map((e) => Task.fromJson(e.data(), e.id)).toList();
           add(ListEvent(itemTask: result));
         });
       }
