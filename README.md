@@ -8,7 +8,7 @@ Todolist app for daily activity
 ## Screenshot
 | 1 | 2|
 |------|-------|
-|<img src="screenshot/image_1.png" width="400">|<img src="screenshot/image_2" width="400">|
+|<img src="screenshot/image_1.png" width="400">|<img src="screenshot/image_2.png" width="400">|
 
 | 3 | 4|
 |------|-------|
