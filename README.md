@@ -5,6 +5,17 @@
 
 Todolist app for daily activity
 
+## Screenshot
+| 1 | 2|
+|------|-------|
+|<img src="screenshot/image_1.png" width="400">|<img src="screenshot/image_2" width="400">|
+
+| 3 | 4|
+|------|-------|
+|<img src="screenshot/image_3.png" width="400">|<img src="screenshot/image_4.png" width="400">|
+
+<img src="screenshot/image_5.png" width="400">
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
