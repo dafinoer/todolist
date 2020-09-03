@@ -1,9 +1,10 @@
 
-![alt text](https://firebase.flutter.dev/img/flutterfire.svg)
 
-# todolist
+<img src="https://firebase.flutter.dev/img/flutterfire.svg" width="200">
 
-Todolist app for daily activity
+# Todolist
+
+Todolist for daily activity
 
 ## Screenshot
 | 1 | 2|
