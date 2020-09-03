@@ -1,5 +1,7 @@
 
 
+import 'package:flutter/material.dart';
+
 abstract class AddEvent {}
 
 
@@ -17,8 +19,9 @@ class TypeChoice extends AddEvent {
 
 class DateEvent extends AddEvent {
   final DateTime dateTime;
+  final TimeOfDay dayOfTime;
 
-  DateEvent(this.dateTime);
+  DateEvent(this.dateTime, {this.dayOfTime});
 }
 
 class SubmitEvent extends AddEvent {}

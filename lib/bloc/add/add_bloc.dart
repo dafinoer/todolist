@@ -75,8 +75,11 @@ class AddBloc extends Bloc<AddEvent, AddState> {
   }
 
   Stream<AddState> _dataEvent(TodoState addState, DateEvent event) async* {
+    final dateTask = DateTime(event.dateTime.year, event.dateTime.month, event.dateTime.day, event.dayOfTime.hour, event.dayOfTime.minute);
+    print(event.dateTime);
+    print(dateTask);
     yield isTodoState(state)
-        ? addState.copyWith(dateTime: event.dateTime)
+        ? addState.copyWith(dateTime: dateTask)
         : TodoState(dateTime: event.dateTime);
   }
 

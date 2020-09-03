@@ -6,6 +6,7 @@ import 'package:todolist/widget/add_task/builder_helper.dart';
 
 class DateTaskModal extends StatelessWidget implements BaseBuilder {
   final now = DateTime.now();
+  TimeOfDay timeOfDay;
   BuildContext _buildContext;
 
   @override
@@ -44,13 +45,25 @@ class DateTaskModal extends StatelessWidget implements BaseBuilder {
   }
 
   void onTapDate(DateTime time) async {
+    timeOfDay = TimeOfDay.now();
+
     final date = await showDatePicker(
-        context: _buildContext,
-        initialDate: time ?? now,
-        firstDate: DateTime(2019),
-        lastDate: DateTime(now.year + 1));
+      context: _buildContext,
+      initialDate: time ?? now,
+      firstDate: DateTime(2019),
+      lastDate: DateTime(now.year + 1),
+    );
+
+    final timeTask = await showTimePicker(
+        context: _buildContext, initialTime: timeOfDay, builder: (_, child) {
+          return MediaQuery(
+            data: MediaQuery.of(_buildContext).copyWith(alwaysUse24HourFormat: true),
+            child: child,
+            );
+        });
+
     if (date != null) {
-      _buildContext.bloc<AddBloc>().add(DateEvent(date));
+      _buildContext.bloc<AddBloc>().add(DateEvent(date, dayOfTime: timeTask));
     }
   }
 

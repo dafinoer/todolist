@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todolist/bloc/home/bloc.dart';
 import 'package:todolist/model/task.dart';
 import 'package:todolist/screen/detail/detail.dart';
+import 'package:todolist/utils/date_format_helper.dart';
 import 'package:todolist/widget/slide_tile_widget.dart';
 
 class Home extends StatefulWidget {
@@ -40,14 +41,17 @@ class _HomeState extends State<Home> {
           }
 
           if (state is HomeLists) {
-            return ListView.builder(
+            if(state.items.isNotEmpty){
+              return ListView.builder(
                 padding: EdgeInsets.only(top: 16.0),
                 itemCount: state.items.length,
                 itemBuilder: (_, index) {
                   return SlideTileWidget(
                       ontap: () =>
                           onTapEdit(state.items[index], state.items[index].id),
-                      title: '08.00 AM',
+                      title: DateFormatHelper.hourAndMinute(
+                          DateTime.fromMillisecondsSinceEpoch(
+                              state.items[index].schedule)),
                       subtitle: state.items[index].title,
                       iconslide: Image.asset('assets/images/trash.png'),
                       isChecked: state.items[index].isChecked,
@@ -63,6 +67,9 @@ class _HomeState extends State<Home> {
                             .add(DeleteTask(state.items[index].id));
                       });
                 });
+            } else {
+              return Center(child: Text('No Have Item'),);
+            }
           }
         }));
   }
