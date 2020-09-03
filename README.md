@@ -1,6 +1,8 @@
 
 
+<p align="center"> 
 <img src="https://firebase.flutter.dev/img/flutterfire.svg" width="200">
+</p>
 
 # Todolist
 
