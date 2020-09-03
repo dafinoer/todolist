@@ -1,6 +1,9 @@
+
+![alt text](https://firebase.flutter.dev/img/flutterfire.svg)
+
 # todolist
 
-A new Flutter project.
+Todolist app for daily activity
 
 ## Getting Started
 
