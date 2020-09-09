@@ -11,7 +11,7 @@ class Detail extends StatelessWidget {
 
   final String docId;
 
-  Detail(this.task,this.docId);
+  Detail(this.task, this.docId);
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,9 @@ class Detail extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: [CustomColors.HeaderBlueDark, CustomColors.HeaderBlueLight],
           ),
+          actions: [
+            
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -62,12 +65,39 @@ class Detail extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.edit), onPressed: () => _onTapEdit(context)),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Icon(Icons.edit),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                CustomColors.PurpleLight,
+                CustomColors.PurpleDark,
+              ],
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(50.0),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: CustomColors.PurpleShadow,
+                blurRadius: 10.0,
+                spreadRadius: 5.0,
+                offset: Offset(0.0, 0.0),
+              ),
+            ],
+          ),
+        ),
+        onPressed: () => _onTapEdit(context),
+      ),
     );
   }
 
   void _onTapEdit(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => EditDetailPage(task, docId)));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (_) => EditDetailPage(task, docId)));
   }
 }

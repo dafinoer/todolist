@@ -27,29 +27,30 @@ class Modal {
                 }
               },
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.75,
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50.0),
-                        topRight: Radius.circular(50.0)),
-                    color: Colors.white),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.elliptical(175, 30),
+                  height: MediaQuery.of(context).size.height * 0.75,
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50.0),
+                          topRight: Radius.circular(50.0)),
+                      color: Colors.white),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: 16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.elliptical(175, 30),
+                            ),
+                          ),
                         ),
-                      ),
+                        MainTask()
+                      ],
                     ),
-                    MainTask()
-                  ],
-                ),
-              ),
+                  )),
             ));
       },
     );

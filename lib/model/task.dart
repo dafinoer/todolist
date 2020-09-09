@@ -10,6 +10,7 @@ class Task extends Equatable{
   final String username;
   final String typeTask;
   final bool isChecked;
+  final bool isNotif;
 
   const Task({
     this.title,
@@ -18,11 +19,12 @@ class Task extends Equatable{
     this.schedule,
     this.username,
     this.typeTask,
-    this.isChecked
+    this.isChecked,
+    this.isNotif
   });
 
   @override
-  List<Object> get props => [title, schedule, emailUser, username, typeTask, id, isChecked];
+  List<Object> get props => [title, schedule, emailUser, username, typeTask, id, isChecked, isNotif];
 
   Map<String, dynamic> toMap() {
     return {
@@ -32,7 +34,8 @@ class Task extends Equatable{
       'schedule' : schedule,
       'type_task' : typeTask,
       'doc_id' : id,
-      'is_checked' : isChecked
+      'is_checked' : isChecked,
+      'is_notif' : isNotif
     };
   }
 
@@ -45,7 +48,8 @@ class Task extends Equatable{
       emailUser: map['email'] ?? '',
       typeTask: map['type_task'] ?? '',
       username: map['username'] ?? '',
-      isChecked: map['is_checked'] ?? false
+      isChecked: map['is_checked'] ?? false,
+      isNotif:  map['is_notif'] ?? false,
     );
   }
 

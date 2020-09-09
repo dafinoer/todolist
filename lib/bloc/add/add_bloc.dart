@@ -45,6 +45,10 @@ class AddBloc extends Bloc<AddEvent, AddState> {
           yield* _onSubmit(currentState);
           break;
 
+        case NotifStatusEvent:
+          yield* _onNotifCheck(currentState, event);
+          break;
+
         case SubmitEdit:
           final dataEvent = event as SubmitEdit;
 
@@ -75,12 +79,18 @@ class AddBloc extends Bloc<AddEvent, AddState> {
   }
 
   Stream<AddState> _dataEvent(TodoState addState, DateEvent event) async* {
-    final dateTask = DateTime(event.dateTime.year, event.dateTime.month, event.dateTime.day, event.dayOfTime.hour, event.dayOfTime.minute);
-    print(event.dateTime);
-    print(dateTask);
+    final dateTask = DateTime(event.dateTime.year, event.dateTime.month,
+        event.dateTime.day, event.dayOfTime.hour, event.dayOfTime.minute);
     yield isTodoState(state)
         ? addState.copyWith(dateTime: dateTask)
         : TodoState(dateTime: event.dateTime);
+  }
+
+  Stream<AddState> _onNotifCheck(
+      TodoState addstate, NotifStatusEvent event) async* {
+    yield isTodoState(state)
+        ? addstate.copyWith(isNotif: event.isChecked)
+        : TodoState(isNotif: event.isChecked);
   }
 
   Stream<AddState> _onSubmit(TodoState newState, {String docName}) async* {
@@ -95,15 +105,15 @@ class AddBloc extends Bloc<AddEvent, AddState> {
           emailUser: currentUser.auth.currentUser.email,
           username: currentUser.auth.currentUser.displayName,
           isChecked: newState.isChecked,
+          isNotif: newState.isNotif,
           typeTask: newState.type.toLowerCase());
 
       if (!isEdit) {
         await _taskRepository.addNewTask(task);
-      }
-      else {
+      } else {
         final taskMap = task.toMap();
         taskMap.removeWhere((key, value) => key == 'doc_id');
-        
+
         await _readRepository.editTask(taskMap, docName);
       }
 

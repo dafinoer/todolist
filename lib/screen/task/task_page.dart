@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/screen/task/task_list_page.dart';
+import 'package:todolist/utils/strings.dart';
 import 'package:todolist/utils/util.dart';
 import 'package:todolist/widget/menu_task_widget.dart';
 
@@ -37,33 +38,41 @@ class _TaskPageState extends State<TaskPage> {
             crossAxisCount: 2,
             children: [
               MenuTaskWidget(
-                title: 'Personal',
+                title: Strings.personal,
                 subtitle: '24 Tasks',
                 imagePath: 'assets/images/icon-user.png',
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => TaskListPage('Personal')));
-                },
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TaskListPage(Strings.personal))),
               ),
               MenuTaskWidget(
                   subtitle: '44 Tasks',
-                  title: 'Work',
-                  imagePath: 'assets/images/icon-briefcase.png'),
+                  title: Strings.work,
+                  imagePath: 'assets/images/icon-briefcase.png',
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TaskListPage(Strings.work))),
+                  ),
               MenuTaskWidget(
                   subtitle: '45 Tasks',
-                  title: 'Meeting',
-                  imagePath: 'assets/images/icon-presentation.png'),
+                  title: Strings.meeting,
+                  imagePath: 'assets/images/icon-presentation.png',
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TaskListPage(Strings.meeting)))
+                  ),
               MenuTaskWidget(
                   subtitle: '54 Tasks',
                   title: 'Shopping',
-                  imagePath: 'assets/images/icon-shopping-basket.png'),
+                  imagePath: 'assets/images/icon-shopping-basket.png',
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TaskListPage(Strings.shopping))),
+                  ),
               MenuTaskWidget(
                   subtitle: '24 Tasks',
-                  title: 'Party',
-                  imagePath: 'assets/images/icon-confetti.png'),
+                  title: Strings.party,
+                  imagePath: 'assets/images/icon-confetti.png',
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TaskListPage(Strings.party))),
+                  ),
               MenuTaskWidget(
                   subtitle: '24 Tasks',
-                  title: 'Study',
-                  imagePath: 'assets/images/icon-molecule.png')
+                  title: Strings.study,
+                  imagePath: 'assets/images/icon-molecule.png',
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TaskListPage(Strings.study))),
+                  )
             ],
           ),
         ],

@@ -34,19 +34,21 @@ class TodoState extends AddState {
   final DateTime dateTime;
   final bool isLoading;
   final bool isChecked;
+  final bool isNotif;
 
-  const TodoState({this.title, this.type, this.dateTime, this.isLoading = false, this.isChecked = false});
+  const TodoState({this.title, this.type, this.dateTime, this.isLoading = false, this.isChecked = false, this.isNotif = false});
 
-  TodoState copyWith({String title, String type, DateTime dateTime, bool isLoading}) {
+  TodoState copyWith({String title, String type, DateTime dateTime, bool isLoading, bool ischeck, bool isNotif}) {
     return TodoState(
         type: type ?? this.type,
         title: title ?? this.title,
         dateTime: dateTime ?? this.dateTime,
         isLoading: isLoading ?? this.isLoading,
-        isChecked: isChecked ?? this.isChecked
+        isChecked: ischeck ?? this.isChecked,
+        isNotif: isNotif ?? this.isNotif
         );
   }
 
   @override
-  List<Object> get props => [title, type, dateTime, isLoading, isChecked];
+  List<Object> get props => [title, type, dateTime, isLoading, isChecked, isNotif];
 }

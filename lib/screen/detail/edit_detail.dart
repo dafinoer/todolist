@@ -6,6 +6,7 @@ import 'package:todolist/bloc/add/add_state.dart';
 import 'package:todolist/model/task.dart';
 import 'package:todolist/utils/util.dart';
 import 'package:todolist/widget/add_task/button_add.dart';
+import 'package:todolist/widget/add_task/button_notif.dart';
 import 'package:todolist/widget/add_task/main_task.dart';
 import 'package:todolist/widget/app_bars.dart';
 
@@ -14,7 +15,8 @@ class EditDetailPage extends StatefulWidget {
 
   final String docId;
 
-  EditDetailPage(this.task, this.docId);
+  EditDetailPage(@required this.task, @required this.docId)
+      : assert(task != null && docId != null);
 
   @override
   _EditDetailPageState createState() => _EditDetailPageState();
@@ -32,12 +34,15 @@ class _EditDetailPageState extends State<EditDetailPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AddBloc(TodoState(
-        title: _taskItem.title,
-        type: _taskItem.typeTask,
-        dateTime: DateTime.fromMillisecondsSinceEpoch(_taskItem.schedule),
-        isChecked: _taskItem.isChecked,
-      ), isEdit: true),
+      create: (_) => AddBloc(
+          TodoState(
+            title: _taskItem.title,
+            type: _taskItem.typeTask,
+            dateTime: DateTime.fromMillisecondsSinceEpoch(_taskItem.schedule),
+            isChecked: _taskItem.isChecked,
+            isNotif: _taskItem.isNotif
+          ),
+          isEdit: true),
       child: Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(75.0),
@@ -53,7 +58,7 @@ class _EditDetailPageState extends State<EditDetailPage> {
                   ),
                 ],
               ),
-              title: Container(child: const Text('Detail')),
+              title: Container(child: const Text('Edit Detail')),
               elevation: 0,
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -63,12 +68,13 @@ class _EditDetailPageState extends State<EditDetailPage> {
                   CustomColors.HeaderBlueLight
                 ],
               ),
+              actions: [ButtonNotif()],
             ),
           ),
           body: SafeArea(
             child: BlocListener<AddBloc, AddState>(
               listener: (_, state) {
-                if(state is SubmitLoading && state.isLoading){
+                if (state is SubmitLoading && state.isLoading) {
                   Navigator.popUntil(context, (route) => route.isFirst);
                 }
               },
@@ -79,7 +85,10 @@ class _EditDetailPageState extends State<EditDetailPage> {
                           child: MainTask(
                     isEdit: true,
                   ))),
-                  ButtonAdd(isEdit: true, docId: widget.docId,)
+                  ButtonAdd(
+                    isEdit: true,
+                    docId: widget.docId,
+                  )
                 ],
               ),
             ),

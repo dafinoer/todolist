@@ -24,6 +24,11 @@ class DateEvent extends AddEvent {
   DateEvent(this.dateTime, {this.dayOfTime});
 }
 
+class NotifStatusEvent extends AddEvent {
+  final bool isChecked;
+  NotifStatusEvent(this.isChecked);
+}
+
 class SubmitEvent extends AddEvent {}
 
 class SubmitEdit extends AddEvent{

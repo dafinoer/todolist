@@ -42,14 +42,17 @@ class ItemLoginWidget extends StatelessWidget {
                       color: CustomColors.TextHeader),
                 ),
                 SizedBox(height: 15),
-                Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pellentesque erat in blandit luctus.',
-                  style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400,
-                      color: CustomColors.TextBody,
-                      fontFamily: 'opensans'),
-                  textAlign: TextAlign.center,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pellentesque erat in blandit luctus.',
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w400,
+                        color: CustomColors.TextBody,
+                        fontFamily: 'opensans'),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ],
             ),
