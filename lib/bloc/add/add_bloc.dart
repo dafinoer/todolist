@@ -4,7 +4,6 @@ import 'package:todolist/bloc/add/add_state.dart';
 import 'package:todolist/model/task.dart';
 import 'package:todolist/repository/read_repository.dart';
 import 'package:todolist/repository/task_repository.dart';
-import 'package:todolist/repository/working_repository.dart';
 import 'package:todolist/utils/firebase_auth_singleton.dart';
 
 class AddBloc extends Bloc<AddEvent, AddState> {

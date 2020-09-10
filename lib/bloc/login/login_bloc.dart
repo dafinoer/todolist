@@ -16,8 +16,8 @@ class LoginBloc extends Bloc<LoginOnSubmit, LoginState> {
     if (event is LoginOnSubmit) {
       try {
         yield LoginOnLoading(true);
-        final googleAuth = await authentification.signGoogle();
-        await preference.setEmail(googleAuth.user.email);
+        await authentification.signGoogle();
+        // await preference.setEmail(googleAuth.user.email);
         yield LoginSuccesState(true);
       } catch (e) {
         print(e);
