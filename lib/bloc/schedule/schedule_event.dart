@@ -5,13 +5,9 @@ abstract class ScheduleEvent {
 
 }
 
-class FirstOpenSchedule extends ScheduleEvent {
-
-}
-
-
-class ScheduleTask extends ScheduleEvent {
+class ScheduleTaskEvent extends ScheduleEvent {
+  final int totalTask;
   final Task task;
 
-  ScheduleTask(this.task);
+  ScheduleTaskEvent({this.task, this.totalTask});
 }

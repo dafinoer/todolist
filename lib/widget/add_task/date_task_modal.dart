@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:todolist/bloc/add/bloc.dart';
 import 'package:todolist/utils/date_format_helper.dart';
 import 'package:todolist/widget/add_task/builder_helper.dart';
@@ -40,7 +41,7 @@ class DateTaskModal extends StatelessWidget implements BaseBuilder {
 
   String txtDate(DateTime time) {
     return time != null
-        ? DateFormatHelper.simpelFormat(time)
+        ? '${DateFormatHelper.yearMonthDay(time)} ${DateFormatHelper.hourAndMinute(time)}'
         : DateFormatHelper.simpelFormat(now);
   }
 
@@ -55,11 +56,16 @@ class DateTaskModal extends StatelessWidget implements BaseBuilder {
     );
 
     final timeTask = await showTimePicker(
-        context: _buildContext, initialTime: timeOfDay, builder: (_, child) {
+        initialEntryMode: TimePickerEntryMode.input,
+        useRootNavigator: false,
+        context: _buildContext,
+        initialTime: timeOfDay,
+        builder: (_, child) {
           return MediaQuery(
-            data: MediaQuery.of(_buildContext).copyWith(alwaysUse24HourFormat: true),
+            data: MediaQuery.of(_buildContext)
+                .copyWith(alwaysUse24HourFormat: true),
             child: child,
-            );
+          );
         });
 
     if (date != null) {

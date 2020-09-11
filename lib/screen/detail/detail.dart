@@ -58,7 +58,7 @@ class Detail extends StatelessWidget {
             ),
             ListTile(
               title: Text('Date'),
-              subtitle: Text(DateFormatHelper.simpelFormat(
+              subtitle: Text(DateFormatHelper.yearMonthDay(
                   DateTime.fromMillisecondsSinceEpoch(task.schedule))),
             )
           ],

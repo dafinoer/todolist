@@ -29,7 +29,18 @@ class SharePref {
 
   String getValueEmail() {
     return _preferences.getString('email');
-    
+  }
+
+  Future<void> setTokenUser(int token) async {
+    await _preferences.setInt('token_user', token);
+  }
+
+  Future<void> setFirstApp(bool status) async {
+    await _preferences.setBool('is_first_install', status);
+  }
+
+  bool getFirstInstallStatus() {
+    return _preferences.getBool('is_first_install');
   }
 
 }

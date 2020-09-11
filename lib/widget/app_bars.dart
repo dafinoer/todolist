@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:todolist/screen/login/login_page.dart';
 import 'package:todolist/utils/firebase_auth_singleton.dart';
 
 import 'package:todolist/utils/util.dart';
@@ -150,9 +151,13 @@ Widget emptyAppbar() {
         ),
       ),
       actions: <Widget>[
-        Container(
-          margin: EdgeInsets.fromLTRB(0, 20, 20, 0),
-          child: Image.asset('assets/images/photo.png'),
+        GestureDetector(
+          onTap: () {
+          },
+          child: Container(
+            margin: EdgeInsets.fromLTRB(0, 20, 20, 0),
+            child: Image.asset('assets/images/photo.png'),
+          ),
         ),
       ],
       elevation: 0,

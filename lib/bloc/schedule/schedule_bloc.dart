@@ -7,9 +7,12 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
 
   @override
   Stream<ScheduleState> mapEventToState(ScheduleEvent event) async* {
+    final current = state;
     try {
-      if (event is FirstOpenSchedule) {
-
+      if (event is ScheduleTaskEvent) {
+        if(current is ScheduleTask){
+          yield current.copyWith(total: event.totalTask);
+        }
       }
     } catch (e) {
       yield ScheduleError(e.toString());

@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:todolist/bloc/schedule/bloc.dart';
 import 'package:todolist/model/task.dart';
 
 abstract class ScheduleState extends Equatable {
@@ -9,13 +8,24 @@ abstract class ScheduleState extends Equatable {
   List<Object> get props => [];
 }
 
-class ScheduleWait extends ScheduleState{}
-
-class ScheduleList extends ScheduleState {
-
+class ScheduleTask extends ScheduleState {
+  final int totalTask;
   final Task scheduleTask;
+  
+  ScheduleTask({this.scheduleTask, this.totalTask});
 
-  ScheduleList(this.scheduleTask);
+  ScheduleTask copyWith({
+    int total,
+    Task newScheduleTask
+  }) {
+    return ScheduleTask(
+      totalTask: total ?? this.totalTask,
+      scheduleTask: newScheduleTask ?? this.scheduleTask
+    );
+  }
+
+  @override
+  List<Object> get props => [totalTask, scheduleTask];
 }
 
 

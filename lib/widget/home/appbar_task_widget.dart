@@ -48,7 +48,7 @@ class AppBarTaskWidget extends StatelessWidget implements PreferredSizeWidget {
           ),
           onTap: () async {
             await _singleton.auth.signOut();
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => LoginPage()));
+            
           },
         ),
       ],

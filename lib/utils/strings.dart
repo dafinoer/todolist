@@ -14,4 +14,7 @@ class Strings {
   static const String add_task = 'Add task';
 
   static const String task = 'Task';
+
+  static const String token_fcm = 'token_fcm';
+  static const String token_user = 'user_token';
 }

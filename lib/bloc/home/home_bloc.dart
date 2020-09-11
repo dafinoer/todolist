@@ -13,6 +13,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final _deleteRepo = TaskRepository();
 
+  final now = DateTime.now();
+
   StreamSubscription _subscription;
 
   ScheduleBloc _scheduleBloc;
@@ -36,7 +38,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           final result = event.docs.map((e) => Task.fromJson(e.data(), e.id)).toList();
           add(ListEvent(itemTask: result));
           // _scheduleBloc.add(event);
-          _scheduleBloc.add(FirstOpenSchedule());
+          final task = result.firstWhere((task) => task.schedule > now.millisecondsSinceEpoch && task.isChecked);
+          print(task);
+          _scheduleBloc.add(ScheduleTaskEvent(totalTask: result.length));
         });
       }
       if (event is ListEvent) {

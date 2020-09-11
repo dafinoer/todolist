@@ -9,6 +9,7 @@ import 'package:todolist/screen/task/task_page.dart';
 import 'package:todolist/widget/app_bars.dart';
 import 'package:todolist/widget/bottom_navigation.dart';
 import 'package:todolist/widget/fab.dart';
+import 'package:todolist/widget/home/appbar_empty_widget.dart';
 import 'package:todolist/widget/home/appbar_task_widget.dart';
 
 class MainPage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _MainPageState extends State<MainPage> {
     return BlocBuilder<NavigatorBloc, NavigatorIndexState>(builder: (_, state) {
       return Scaffold(
         key: globalKey,
-        appBar: emptyAppbar(), //AppBarTaskWidget(),
+        appBar: AppBarEmptyWidget(), //AppBarTaskWidget(),
         body: SafeArea(child: _viewWidget[state.index]),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: customFab(context, globalKey),

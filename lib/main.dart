@@ -6,7 +6,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:todolist/bloc/home/bloc.dart';
 import 'package:todolist/bloc/home/home_bloc.dart';
 import 'package:todolist/bloc/navigator/bloc.dart';
@@ -17,13 +19,18 @@ import 'package:todolist/screen/login/login_page.dart';
 import 'package:todolist/screen/main_page.dart';
 import 'package:todolist/screen/onboard/onboarding.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todolist/utils/fcm_utils.dart';
 import 'package:todolist/utils/firebase_auth_singleton.dart';
 import 'package:todolist/utils/shared_pref.dart';
+import 'package:todolist/utils/strings.dart';
 import 'package:todolist/utils/util.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MainBlocObserver();
-  runApp(App());
+  await Firebase.initializeApp();
+  final SharePref sharedpref = SharePref.singleton();
+  initializeDateFormatting().then((value) => runApp(App()));
 }
 
 class App extends StatefulWidget {
@@ -35,55 +42,35 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   final SharePref sharedpref = SharePref.singleton();
 
-  final notifBloc = ScheduleBloc(ScheduleWait());
+  final notifBloc = ScheduleBloc(ScheduleTask());
 
-  FirebaseAuthSingleton user_auth;
+  final FcmUtils fcmUtils = FcmUtils();
 
-  final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  final storage = FlutterSecureStorage();
 
-  bool isFirstPage = true;
+  bool isFirstInstall = true;
+
+  bool isLogin = false;
 
   @override
   void initState() {
     sharedpref.build();
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent, //top bar color
-      ),
-    );
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
-    
-    firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        // _showItemDialog(message);
-      },
-      // onBackgroundMessage: myBackgroundMessageHandler,
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-        // _navigateToItemDetail(message);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-        // _navigateToItemDetail(message);
-      },
-    );
-    firebaseMessaging.getToken().then((value) {
-      print(value);
-      if(sharedpref.getValueSharePref('token') != null){
-        isFirstPage = false;
-      } else {
-        sharedpref.setToken(value);
-      }
-      initializeFlutterFire();
-    });
+    fcmUtils.getTokenFirebase().then((value) => initializeFlutterFire());
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   SystemUiOverlayStyle(
+    //     statusBarColor: Colors.transparent, //top bar color
+    //   ),
+    // );
+    // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
     super.initState();
   }
 
   void initializeFlutterFire() async {
     try {
-      await Firebase.initializeApp();
-      user_auth = FirebaseAuthSingleton.singleton();
+      isFirstInstall = sharedpref.getFirstInstallStatus() == null;
+      var itemToken = await storage.read(key: Strings.token_user);
+      if (itemToken != null) isLogin = true;
+
       setState(() {});
     } catch (e) {
       print(e.toString());
@@ -104,7 +91,6 @@ class _AppState extends State<App> {
             providers: [
               BlocProvider(create: (_) => NavigatorBloc(NavigatorIndexState(0))),
               BlocProvider(create: (_) => HomeBloc(HomeLoading(), notifBloc)),
-              BlocProvider(create: (_) => NotifBloc(NotifFirst(), firebaseMessaging),)
             ],
             child: MaterialApp(
                 debugShowCheckedModeBanner: false,
@@ -112,22 +98,18 @@ class _AppState extends State<App> {
                   canvasColor: CustomColors.GreyBackground,
                   fontFamily: 'rubik',
                 ),
-                home: _onCheckSession())));
+                home: _sessionWidget())));
   }
 
-  Widget _onCheckSession() {
-    if (user_auth != null) {
-      if (user_auth.auth.currentUser != null) {
-        return MainPage();
-      } else if(!isFirstPage){
-        return LoginPage();
-      } else {
-        return Onboarding();
-      }
-    } else {
-      return Scaffold(
-        body: const SizedBox(),
-      );
+  Widget _sessionWidget() {
+    if (isLogin) {
+      return MainPage();
+    } else if (isFirstInstall == null) {
+      return Scaffold(body: const SizedBox(),);
+    } else if (isFirstInstall) {
+      return Onboarding();
+    } else if (!isFirstInstall) {
+      return LoginPage();
     }
   }
 }
