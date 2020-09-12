@@ -1,18 +1,22 @@
-import 'package:todolist/api/task_collection.dart';
+import 'package:todolist/api/task_service.dart';
 import 'package:todolist/model/task.dart';
 
 class TaskRepository {
-  final TaskCollection _collection = TaskCollection();
+  TaskService _services;
+
+  TaskRepository(TaskService service) {
+    this._services = service;
+  }
 
   Future<void> addNewTask(Task task) async {
-    return _collection
+    return _services
         .addTask(task.toMap())
         .then((value) => print('writing task success'))
         .catchError((error) => print(error));
   }
 
   Future<void> deleteTask(String idDoc) async {
-    await _collection.deleteTask(idDoc);
+    await _services.deleteTask(idDoc);
     return;
   }
 }

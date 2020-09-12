@@ -12,7 +12,7 @@ class ScheduleTask extends ScheduleState {
   final int totalTask;
   final Task scheduleTask;
   
-  ScheduleTask({this.scheduleTask, this.totalTask});
+  ScheduleTask({this.scheduleTask, this.totalTask = 0});
 
   ScheduleTask copyWith({
     int total,

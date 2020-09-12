@@ -2,20 +2,21 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todolist/api/read_collection.dart';
+import 'package:todolist/api/firestore_dao.dart';
+import 'package:todolist/api/read_service.dart';
 import 'package:todolist/bloc/task/task_event.dart';
 import 'package:todolist/bloc/task/task_state.dart';
 import 'package:todolist/model/task.dart';
 import 'package:todolist/repository/read_repository.dart';
-import 'package:todolist/utils/strings.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   StreamSubscription _subscription;
 
-  final ReadRepository _repository = ReadRepository(Strings.task.toLowerCase());
+  final ReadRepository _repository = ReadRepository(ReadService(
+      FirestoreDao(reference: FirebaseFirestore.instance.collection('task'))));
 
-  final ReadCollection _collection =
-      ReadCollection(collectionName: Strings.task.toLowerCase());
+  final ReadService _collection = ReadService(
+      FirestoreDao(reference: FirebaseFirestore.instance.collection('task')));
 
   final String queryField;
 

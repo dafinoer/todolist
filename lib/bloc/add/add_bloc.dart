@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todolist/api/firestore_dao.dart';
+import 'package:todolist/api/read_service.dart';
+import 'package:todolist/api/task_service.dart';
 import 'package:todolist/bloc/add/add_event.dart';
 import 'package:todolist/bloc/add/add_state.dart';
 import 'package:todolist/model/task.dart';
@@ -9,9 +14,11 @@ import 'package:todolist/utils/firebase_auth_singleton.dart';
 class AddBloc extends Bloc<AddEvent, AddState> {
   final bool isEdit;
 
-  final TaskRepository _taskRepository = TaskRepository();
+  final TaskRepository _taskRepository = TaskRepository(TaskService(
+      FirestoreDao(reference: FirebaseFirestore.instance.collection('task'))));
 
-  final ReadRepository _readRepository = ReadRepository('task');
+  final ReadRepository _readRepository = ReadRepository(ReadService(
+      FirestoreDao(reference: FirebaseFirestore.instance.collection('task'))));
 
   final currentUser = FirebaseAuthSingleton.singleton();
 

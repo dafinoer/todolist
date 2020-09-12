@@ -14,7 +14,6 @@ class FcmUtils {
       final readTokenFcm = await _secure.read(key: 'token_fcm');
 
       if (readTokenFcm == null) {
-        print('token fcm $readTokenFcm');
         await _secure.write(key: 'token_fcm', value: itemToken);
       }
     } catch (e) {
