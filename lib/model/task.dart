@@ -40,9 +40,9 @@ class Task extends Equatable{
   }
 
 
-  factory Task.fromJson(Map map, String idDoc){
+  factory Task.fromJson(Map map){
     return Task(
-      id: idDoc ?? '',
+      id:'0',
       schedule: map['schedule'] ?? 0,
       title: map['title'] ?? '',
       emailUser: map['email'] ?? '',

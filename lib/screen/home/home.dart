@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
                           onTapEdit(state.items[index], state.items[index].id),
                       title: DateFormatHelper.hourAndMinute(
                           DateTime.fromMillisecondsSinceEpoch(
-                              state.items[index].schedule)),
+                              state.items[index].schedule )),
                       subtitle: state.items[index].title,
                       iconslide: Image.asset('assets/images/trash.png'),
                       isChecked: state.items[index].isChecked,

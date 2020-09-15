@@ -3,7 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:todolist/utils/firebase_auth_singleton.dart';
 
 class Authentification {
-  Future<UserCredential> signGoogle() async {
+  static Future<UserCredential> signGoogle() async {
     try {
       // final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
       final firebaseAuth = FirebaseAuthSingleton.singleton();

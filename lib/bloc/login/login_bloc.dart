@@ -8,8 +8,7 @@ import 'package:todolist/utils/strings.dart';
 
 class LoginBloc extends Bloc<LoginOnSubmit, LoginState> {
   LoginBloc(LoginState initialState) : super(initialState);
-
-  final Authentification authentification = Authentification();
+  
   final SharePref preference = SharePref.singleton();
 
   final storage = FlutterSecureStorage();
@@ -19,7 +18,7 @@ class LoginBloc extends Bloc<LoginOnSubmit, LoginState> {
     if (event is LoginOnSubmit) {
       try {
         yield LoginOnLoading(true);
-        final dataUser = await authentification.signGoogle();
+        final dataUser = await Authentification.signGoogle();
         await storage.write(key: Strings.token_user, value: dataUser.credential.token.toString());
         preference.setFirstApp(true);
         yield LoginSuccesState(true);

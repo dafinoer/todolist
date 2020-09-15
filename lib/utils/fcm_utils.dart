@@ -12,7 +12,7 @@ class FcmUtils {
       if (itemToken == null) return;
 
       final readTokenFcm = await _secure.read(key: 'token_fcm');
-
+      print(itemToken);
       if (readTokenFcm == null) {
         await _secure.write(key: 'token_fcm', value: itemToken);
       }

@@ -1,24 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todolist/api/firestore_dao.dart';
-import 'package:todolist/api/read_service.dart';
-import 'package:todolist/api/task_service.dart';
 import 'package:todolist/bloc/add/add_event.dart';
 import 'package:todolist/bloc/add/add_state.dart';
 import 'package:todolist/model/task.dart';
-import 'package:todolist/repository/read_repository.dart';
-import 'package:todolist/repository/task_repository.dart';
+import 'package:todolist/repository/add_repository.dart';
 import 'package:todolist/utils/firebase_auth_singleton.dart';
 
 class AddBloc extends Bloc<AddEvent, AddState> {
   final bool isEdit;
 
-  final TaskRepository _taskRepository = TaskRepository(TaskService(
-      FirestoreDao(reference: FirebaseFirestore.instance.collection('task'))));
-
-  final ReadRepository _readRepository = ReadRepository(ReadService(
-      FirestoreDao(reference: FirebaseFirestore.instance.collection('task'))));
+  final repository = AddRepository();
 
   final currentUser = FirebaseAuthSingleton.singleton();
 
@@ -106,6 +97,7 @@ class AddBloc extends Bloc<AddEvent, AddState> {
       yield newState.copyWith(isLoading: true);
 
       final task = Task(
+          id: repository.getId,
           title: newState.title,
           schedule: newState.dateTime.millisecondsSinceEpoch,
           emailUser: currentUser.auth.currentUser.email,
@@ -115,12 +107,12 @@ class AddBloc extends Bloc<AddEvent, AddState> {
           typeTask: newState.type.toLowerCase());
 
       if (!isEdit) {
-        await _taskRepository.addNewTask(task);
+        await repository.addNewTask(task);
       } else {
         final taskMap = task.toMap();
         taskMap.removeWhere((key, value) => key == 'doc_id');
 
-        await _readRepository.editTask(taskMap, docName);
+        await repository.editTask(taskMap, docName);
       }
 
       yield newState.copyWith(isLoading: false);

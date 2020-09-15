@@ -35,5 +35,5 @@ class HomeLists extends HomeState {
   }
 
   @override
-  List<Object> get props => [items];
+  List<Object> get props => [items, isMax];
 }
