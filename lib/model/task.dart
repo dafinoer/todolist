@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 
 class Task extends Equatable{
+  final String docId;
   final String id;
   final String title;
   final int schedule;
@@ -13,6 +14,7 @@ class Task extends Equatable{
   final bool isNotif;
 
   const Task({
+    this.docId,
     this.title,
     this.id,
     this.emailUser,
@@ -24,7 +26,7 @@ class Task extends Equatable{
   });
 
   @override
-  List<Object> get props => [title, schedule, emailUser, username, typeTask, id, isChecked, isNotif];
+  List<Object> get props => [title, schedule, emailUser, username, typeTask, id, isChecked, isNotif, docId];
 
   Map<String, dynamic> toMap() {
     return {
@@ -40,8 +42,9 @@ class Task extends Equatable{
   }
 
 
-  factory Task.fromJson(Map map){
+  factory Task.fromJson(Map map, String docId){
     return Task(
+      docId: docId ?? "",
       id:'0',
       schedule: map['schedule'] ?? 0,
       title: map['title'] ?? '',

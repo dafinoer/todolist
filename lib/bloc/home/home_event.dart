@@ -26,9 +26,9 @@ class TaskDoneEvent extends HomeEvent {
 class FirstOpen extends HomeEvent {}
 
 class DeleteTask extends HomeEvent {
-  final String idDoc;
+  final Task task;
 
-  DeleteTask(this.idDoc);
+  DeleteTask(this.task);
 }
 
 class PaginationEventTask extends HomeEvent{

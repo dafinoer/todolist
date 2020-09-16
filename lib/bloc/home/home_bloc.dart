@@ -34,15 +34,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       if (event is FirstOpen) {
         final itemTask = await homeRepo.getTask();
-
-        itemTask.forEach((element) {
-          print(element);
-        });
-
         yield HomeLists(itemTask, false);
       }
-      if (event is ListEvent) {
-        yield HomeLists(event.itemTask, false);
+
+      if (event is ListEvent && !_isHasMax(current)) {
+        if (current is HomeLists) {
+          final lastItem = current.items.last;
+          final itemResult = await homeRepo.fetchingPaginate('id', lastItem.id);
+
+          if (itemResult.isNotEmpty) {
+            yield current.copyWith(
+                newitem: current.items + itemResult, isMax: false);
+          } else {
+            yield current.copyWith(isMax: true);
+          }
+        }
       }
 
       if (event is TaskDoneEvent) {
@@ -51,11 +57,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
 
       if (event is DeleteTask) {
-        await homeRepo.deleteTask(event.idDoc);
+        if(current is HomeLists){
+          await homeRepo.deleteTask(event.task.docId);
+          current.items.remove(event.task);
+          
+          yield current.copyWith(newitem: List<Task>.from(current.items));
+        }
       }
     } catch (e) {
       print(e);
       yield HomeError(e.toString());
     }
   }
+
+  bool _isHasMax(HomeState stateitem) =>
+      stateitem is HomeLists && stateitem.isMax;
 }

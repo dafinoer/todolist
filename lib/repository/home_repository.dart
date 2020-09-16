@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:todolist/api/firestore_service.dart';
 import 'package:todolist/model/task.dart';
 
@@ -9,7 +10,8 @@ class HomeRepo {
     try {
       final result = await _services.getTask();
       return result.docs.map((e) {
-        if (e.exists) return Task.fromJson(e.data());
+        print(e.id);
+        if (e.exists) return Task.fromJson(e.data(), e.id);
       }).toList();
     } catch (e) {
       throw Exception(e.toString());
@@ -26,11 +28,7 @@ class HomeRepo {
           .limit(limitToLast)
           .get();
 
-      var itemFixed = UnmodifiableListView(result.docs.map((e) {
-        if (e.exists) {
-          Task.fromJson(e.data());
-        }
-      }).toList());
+      var itemFixed = convertToListTask(result);
 
       return itemFixed.toList();
     } catch (e) {
@@ -53,4 +51,11 @@ class HomeRepo {
   }
 
   String getId() => this._services.getId();
+
+  List<Task> convertToListTask(QuerySnapshot snapshot) =>
+      UnmodifiableListView(snapshot.docs.map((e) {
+        if (e.exists) {
+          Task.fromJson(e.data(), e.id);
+        }
+      }).toList());
 }

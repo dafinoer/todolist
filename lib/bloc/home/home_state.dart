@@ -28,10 +28,10 @@ class HomeLists extends HomeState {
   const HomeLists(this.items, this.isMax);
 
   HomeLists copyWith({
-    List<QueryDocumentSnapshot> newitem,
+    List<Task> newitem,
     bool isMax
   }) {
-    return HomeLists(newitem ?? this.items, isMax ?? this.items);
+    return HomeLists(newitem ?? this.items, isMax ?? this.isMax);
   }
 
   @override

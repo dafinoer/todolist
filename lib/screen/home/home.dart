@@ -58,13 +58,13 @@ class _HomeState extends State<Home> {
                       isBellActive: false,
                       onTapCheck: () {
                         context.bloc<HomeBloc>().add(TaskDoneEvent(
-                            docName: state.items[index].id,
+                            docName: state.items[index].docId,
                             isDone: !state.items[index].isChecked));
                       },
                       onTapSlide: () {
                         context
                             .bloc<HomeBloc>()
-                            .add(DeleteTask(state.items[index].id));
+                            .add(DeleteTask(state.items[index]));
                       });
                 });
             } else {

@@ -48,5 +48,5 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   List<Task> _listOfTask(QuerySnapshot event) =>
-      event.docs.map((e) => Task.fromJson(e.data())).toList();
+      event.docs.map((e) => Task.fromJson(e.data(), e.id)).toList();
 }
